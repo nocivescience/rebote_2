@@ -1,10 +1,10 @@
 from manim import *
 class BouncingScene(Scene):
     CONFIG={
-        
+        'radius':1
     }
     def construct(self):
-        ball=self.get_ball(1)
+        ball=self.get_ball(self.CONFIG['radius'])
         box=self.get_box()
         for mob in [ball,box]:
             self.play(Create(mob))
@@ -21,5 +21,5 @@ class BouncingScene(Scene):
         ball.acceleration=np.array([0,-4,0])
         ball.velocity=ball.velocity+ball.acceleration*dt
         ball.shift(ball.velocity)
-        if ball.get_center()[1]>3 or ball.get_center()[1]<-3:
+        if ball.get_center()[1]-self.CONFIG['radius']/2>3 or ball.get_center()[1]+self.CONFIG['radius']<-3:
             ball.velocity[1]=-ball.velocity[1]
